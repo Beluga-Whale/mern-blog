@@ -8,16 +8,19 @@ import postRoute from './routes/postRoute.js'
 import commentRoute from './routes/commentRoute.js'
 import authRoute from './routes/authRoute.js'
 import morgan from 'morgan'
-
+import cookieParser from 'cookie-parser'
+import cors from 'cors'
 
 dotenv.config()
-const PORT = process.env.PORT || 8800
+const PORT = process.env.PORT || 7000
 const app = express()
 
 
 mongoose.set('strictQuery', true)
 ConnectDB()
 
+app.use(cors())
+app.use(cookieParser())
 app.use(morgan('dev'))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
