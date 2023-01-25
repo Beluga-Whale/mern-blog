@@ -1,20 +1,17 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+import { useAppDispatch } from '../app/hooks';
+import { fetchUserByLogin } from '../features/userSlice';
 
 const SignIn = () => {
-    const [email, setEmail] = useState<String>('');
-    const [password, setPassword] = useState<String>('');
+    const [email, setEmail] = useState<string>('');
+    const [password, setPassword] = useState<string>('');
+
+    const dispatch = useAppDispatch();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        await axios
-            .post('auth/signin', {
-                email,
-                password,
-            })
-            .then(res => console.log(res.data))
-            .catch(err => console.log(err));
+        dispatch(fetchUserByLogin({ email, password }));
     };
     return (
         <section className=" mt-8">

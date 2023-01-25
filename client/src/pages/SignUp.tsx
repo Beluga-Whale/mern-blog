@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const SignUp = () => {
     const [name, setName] = useState<String>('');
@@ -15,9 +17,35 @@ const SignUp = () => {
                 email,
                 password,
             })
-            .then(res => console.log(res.data))
-            .catch(err => console.log(err));
+            .then(res => {
+                toast.success('🦄 Sign Up Success', {
+                    position: 'top-right',
+                    autoClose: 2500,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: 'light',
+                });
+                setName('');
+                setEmail('');
+                setPassword('');
+            })
+            .catch(err => {
+                toast.error(`User of Email already exists`, {
+                    position: 'top-right',
+                    autoClose: 2500,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: 'light',
+                });
+            });
     };
+    // Todo use ReduxPersist to keep data when refetch
     return (
         <section className=" mt-8">
             <div className="text-center">
@@ -56,6 +84,18 @@ const SignUp = () => {
                 >
                     Sign Up
                 </button>
+                <ToastContainer
+                    position="top-right"
+                    autoClose={2500}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss={false}
+                    draggable
+                    pauseOnHover
+                    theme="light"
+                />
             </form>
         </section>
     );
