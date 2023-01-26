@@ -20,17 +20,14 @@ const SignUp = () => {
             .then(res => {
                 toast.success('🦄 Sign Up Success', {
                     position: 'top-right',
-                    autoClose: 2500,
+                    autoClose: 2000,
                     hideProgressBar: false,
                     closeOnClick: true,
-                    pauseOnHover: true,
+                    pauseOnHover: false,
                     draggable: true,
                     progress: undefined,
                     theme: 'light',
                 });
-                setName('');
-                setEmail('');
-                setPassword('');
             })
             .catch(err => {
                 toast.error(`User of Email already exists`, {
@@ -44,8 +41,11 @@ const SignUp = () => {
                     theme: 'light',
                 });
             });
+        setName('');
+        setEmail('');
+        setPassword('');
     };
-    // Todo use ReduxPersist to keep data when refetch
+
     return (
         <section className=" mt-8">
             <div className="text-center">
@@ -63,19 +63,22 @@ const SignUp = () => {
                     type="text"
                     onChange={e => setName(e.target.value)}
                     placeholder="Username"
+                    required
                 />
                 <input
                     className="py-2 px-2 w-80 "
-                    type="text"
+                    type="email"
                     onChange={e => setEmail(e.target.value)}
                     placeholder="Email"
+                    required
                 />
 
                 <input
                     className="py-2 px-2 w-80 "
-                    type="text"
+                    type="password"
                     onChange={e => setPassword(e.target.value)}
                     placeholder="Password"
+                    required
                 />
 
                 <button
@@ -86,14 +89,14 @@ const SignUp = () => {
                 </button>
                 <ToastContainer
                     position="top-right"
-                    autoClose={2500}
+                    autoClose={2000}
                     hideProgressBar={false}
                     newestOnTop={false}
                     closeOnClick
                     rtl={false}
-                    pauseOnFocusLoss={false}
+                    pauseOnFocusLoss
                     draggable
-                    pauseOnHover
+                    pauseOnHover={false}
                     theme="light"
                 />
             </form>

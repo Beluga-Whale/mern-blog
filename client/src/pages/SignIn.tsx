@@ -2,16 +2,18 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAppDispatch } from '../app/hooks';
 import { fetchUserByLogin } from '../features/userSlice';
+import { useNavigate } from 'react-router-dom';
 
 const SignIn = () => {
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
-
+    const navigate = useNavigate();
     const dispatch = useAppDispatch();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         dispatch(fetchUserByLogin({ email, password }));
+        navigate('/');
     };
     return (
         <section className=" mt-8">
