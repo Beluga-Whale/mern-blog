@@ -29,16 +29,18 @@ const SignIn = () => {
             >
                 <input
                     className="py-2 px-2 w-80 "
-                    type="text"
+                    type="email"
                     onChange={e => setEmail(e.target.value)}
                     placeholder="Email"
+                    required
                 />
 
                 <input
                     className="py-2 px-2 w-80 "
-                    type="text"
+                    type="password"
                     onChange={e => setPassword(e.target.value)}
                     placeholder="Password"
+                    required
                 />
 
                 <button

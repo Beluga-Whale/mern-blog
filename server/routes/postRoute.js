@@ -1,8 +1,31 @@
 import express from 'express'
-import { } from '../controllers/postController.js'
+import { addPost, deletePost, getPost, updatePost, addView, random, trend, follow } from '../controllers/postController.js'
+import { verifyToken } from '../verifyToken.js'
 
 const router = express.Router()
 
+//Create new post
+router.post('/', verifyToken, addPost)
 
+//Update post
+router.put('/:id', verifyToken, updatePost)
+
+//Delete post
+router.delete('/:id', verifyToken, deletePost)
+
+//Get post 
+router.get('/find/:id', getPost)
+
+//Put View
+router.put('/view/:id', addView)
+
+//Get Trend
+router.get('/trend', trend)
+
+//Get random
+router.get('/random', random)
+
+//Put follow
+router.get('/follow', verifyToken, follow)
 
 export default router

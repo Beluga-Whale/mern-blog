@@ -8,13 +8,30 @@ import {
     like,
     dislike
 } from '../controllers/userController.js'
+import { verifyToken } from '../verifyToken.js'
 
 const router = express.Router()
 
 // Update User
-router.put("/:id", updateUser)
+router.put("/:id", verifyToken, updateUser)
 
-router.get("/find/:id", getUser)
-// 45:41
+// Delete User
+router.delete("/:id", verifyToken, deleteUser)
+
+//Get a user
+router.get('/find/:id', getUser)
+
+//Follow
+router.put('/follow/:id', verifyToken, follow)
+
+//UnFollow
+router.put('/unfollow/:id', verifyToken, unfollow)
+
+//Like a post
+router.put('/like/:postId', verifyToken, like)
+
+//Dislike a post
+router.put('/dislike/:postId', verifyToken, dislike)
+
 
 export default router

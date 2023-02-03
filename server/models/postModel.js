@@ -6,19 +6,19 @@ const postSchema = new mongoose.Schema({
         required: true,
     },
     title: {
-        type: string,
+        type: String,
         required: true
     },
     desc: {
-        type: string,
+        type: String,
         required: true
     },
     imgUrl: {
-        type: string,
+        type: String,
         required: true
     },
     postUrl: {
-        type: string,
+        type: String,
         required: true
     },
     views: {
