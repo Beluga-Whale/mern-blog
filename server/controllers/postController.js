@@ -78,7 +78,7 @@ export const trend = async (req, res, next) => {
 
 export const random = async (req, res, next) => {
     try {
-        const posts = await Post.aggregate([{ $sample: { size: 5 } }])
+        const posts = await Post.aggregate([{ $sample: { size: 40 } }])
         res.status(200).json(posts)
     } catch (err) {
         next(err)
@@ -96,6 +96,27 @@ export const follow = async (req, res, next) => {
             })
         )
         res.status(200).json(list.flat().sort((a, b) => b.createdAt - a.createdAt))
+    } catch (err) {
+        next(err)
+    }
+}
+
+export const getByTags = async (req, res, next) => {
+    const tags = req.query.tags.split(",")
+
+    try {
+        const post = await Post.find({ tags: { $in: tags } }).limit(20)
+        res.status(200).json(post)
+    } catch (err) {
+        next(err)
+    }
+}
+
+export const search = async (req, res, next) => {
+    const query = req.query.q
+    try {
+        const post = await Post.find({ title: { $regex: query, $options: "i" } }).limit(40)
+        res.status(200).json(post)
     } catch (err) {
         next(err)
     }

@@ -1,5 +1,7 @@
 import { createError } from "../error.js"
 import User from '../models/userModel.js'
+import Post from '../models/postModel.js'
+
 export const updateUser = async (req, res) => {
     if (req.params.id === req.user.id) {
         try {
@@ -63,15 +65,27 @@ export const unfollow = async (req, res, next) => {
     }
 }
 export const like = async (req, res, next) => {
+    const id = req.user.id
+    const postId = req.params.postId
     try {
-
+        await Post.findByIdAndUpdate(postId, {
+            $addToSet: { likes: id },
+            $pull: { dislikes: id }
+        })
+        res.status(200).json("The video has been like")
     } catch (err) {
         next(err)
     }
 }
 export const dislike = async (req, res, next) => {
+    const id = req.user.id
+    const postId = req.params.postId
     try {
-
+        await Post.findByIdAndUpdate(postId, {
+            $addToSet: { dislikes: id },
+            $pull: { likes: id }
+        })
+        res.status(200).json("The video has been dislike")
     } catch (err) {
         next(err)
     }

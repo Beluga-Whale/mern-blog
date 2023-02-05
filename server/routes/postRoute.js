@@ -1,5 +1,5 @@
 import express from 'express'
-import { addPost, deletePost, getPost, updatePost, addView, random, trend, follow } from '../controllers/postController.js'
+import { addPost, deletePost, getPost, updatePost, addView, random, trend, follow, getByTags, search } from '../controllers/postController.js'
 import { verifyToken } from '../verifyToken.js'
 
 const router = express.Router()
@@ -27,5 +27,11 @@ router.get('/random', random)
 
 //Put follow
 router.get('/follow', verifyToken, follow)
+
+//Get tags
+router.get('/tags', getByTags)
+
+//get Search
+router.get('/search', search)
 
 export default router
