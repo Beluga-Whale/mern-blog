@@ -29,7 +29,7 @@ const Navbar = () => {
                         <Link to="/">Home</Link>
                     </li>
                     <li className="px-4  cursor-pointer    hover:scale-105 duration-200 hover:text-indigo-500 hover:font-semibold ">
-                        <Link to="#" className="flex items-center ">
+                        <Link to="/Editor" className="flex items-center ">
                             <MdOutlineArticle size={20} className="mr-3" />
                             <p>New Article</p>
                         </Link>

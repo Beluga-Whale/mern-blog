@@ -3,7 +3,7 @@ import { format } from 'timeago.js';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useAppSelector } from '../app/hooks';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 interface postDetail {
     post: any;
@@ -39,11 +39,11 @@ const BlogCard = ({ post }: postDetail) => {
                         className="rounded-full h-14 w-14 object-cover "
                     />
                     <div className="flex flex-col ml-2">
-                        <p className="text-indigo-500">{writer.name}</p>
-
-                        <p>
-                            {post.views} views • {format(post.createdAt)}
+                        <p className="text-indigo-500 font-bold">
+                            {writer.name}
                         </p>
+
+                        <p>{format(post.createdAt)}</p>
                     </div>
                 </div>
                 <div>
@@ -58,10 +58,12 @@ const BlogCard = ({ post }: postDetail) => {
             </div>
             <div>
                 <h1 className="font-bold">{post.title}</h1>
-                <p className="text-gray-400">{post.desc}</p>
-                <button className="border border-purple-600 text-indigo-500 px-4 py-2 rounded-md mt-4 hover:bg-indigo-500 hover:text-white  ">
-                    Read more...
-                </button>
+                <p className="text-gray-400">{post.desc.substring(0, 240)}</p>
+                <Link to={`/blog/${post._id}`}>
+                    <button className="border border-purple-600 text-indigo-500 px-4 py-2 rounded-md mt-4 hover:bg-indigo-500 hover:text-white">
+                        Read more...
+                    </button>
+                </Link>
             </div>
         </div>
     );

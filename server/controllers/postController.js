@@ -17,7 +17,7 @@ export const updatePost = async (req, res, next) => {
         if (!post) {
             next(createError(404, "Post not found!"))
         }
-        if (req.user.id === video.userId) {
+        if (req.user.id === post.userId) {
             const updatedPost = await Post.findByIdAndUpdate(req.params.id, {
                 $set: req.body
             }, {
@@ -37,7 +37,7 @@ export const deletePost = async (req, res, next) => {
         if (!post) {
             next(createError(404, "Post not found!"))
         }
-        if (req.user.id === video.userId) {
+        if (req.user.id === post.userId) {
             await Post.findByIdAndDelete(req.params.id)
             res.status(200).json("The post has been delete")
         } else {
@@ -60,6 +60,8 @@ export const addView = async (req, res, next) => {
     try {
         await Post.findByIdAndUpdate(req.body.params, {
             $inc: { views: 1 }
+        }, {
+            new: true
         })
         res.status(200).json("The view has been increase")
     } catch (err) {

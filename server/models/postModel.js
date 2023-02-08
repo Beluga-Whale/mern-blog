@@ -15,11 +15,11 @@ const postSchema = new mongoose.Schema({
     },
     imgUrl: {
         type: String,
-        required: true
+
     },
     postUrl: {
         type: String,
-        required: true
+
     },
     views: {
         type: Number,
