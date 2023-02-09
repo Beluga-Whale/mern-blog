@@ -15,20 +15,8 @@ const initialState: postState = {
 const postSlice = createSlice({
     name: 'posts',
     initialState,
-    reducers: {
-        like: (state, action) => {
-            if (!state.posts?.likes?.includes(action.payload)) {
-                state.posts?.likes?.push(action.payload);
-                state.posts?.dislikes?.splice(
-                    state.posts?.dislikes?.findIndex(
-                        (userId: any) => userId === action.payload
-                    ),
-                    1
-                );
-            }
-        },
-    },
+    reducers: {},
 });
 
-export const { like } = postSlice.actions;
+export const {} = postSlice.actions;
 export default postSlice.reducer;

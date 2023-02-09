@@ -5,7 +5,6 @@ import { format } from 'timeago.js';
 import axios from 'axios';
 import { useAppSelector, useAppDispatch } from '../app/hooks';
 import { subscription } from '../features/userSlice';
-import { like } from '../features/postSlice';
 
 const BlogDetail = () => {
     const { id } = useParams();
