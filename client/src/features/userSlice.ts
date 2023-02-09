@@ -40,6 +40,18 @@ export const userSlice = createSlice({
             state.loading = false;
             state.error = null;
         },
+        subscription: (state, action) => {
+            if (state.user.followerUsers.includes(action.payload)) {
+                state.user.followerUsers.splice(
+                    state.user.followerUsers.findIndex(
+                        (channelId: any) => channelId === action.payload
+                    ),
+                    1
+                );
+            } else {
+                state.user.followerUsers.push(action.payload);
+            }
+        },
     },
     extraReducers(builder) {
         builder.addCase(fetchUserByLogin.pending, state => {
@@ -62,6 +74,6 @@ export const userSlice = createSlice({
     },
 });
 
-export const { logout } = userSlice.actions;
+export const { logout, subscription } = userSlice.actions;
 
 export default userSlice.reducer;

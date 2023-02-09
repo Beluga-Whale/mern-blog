@@ -2,7 +2,7 @@ import { AiFillHeart } from 'react-icons/ai';
 import { format } from 'timeago.js';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { useAppSelector } from '../app/hooks';
+import { useAppSelector, useAppDispatch } from '../app/hooks';
 import { useNavigate, Link } from 'react-router-dom';
 
 interface postDetail {
@@ -13,6 +13,7 @@ const BlogCard = ({ post }: postDetail) => {
     const [writer, setWriter] = useState<any>({});
     const { user } = useAppSelector(state => state.users);
     const navigate = useNavigate();
+
     useEffect(() => {
         const fetchWriter = async () => {
             const res = await axios.get(`/users/find/${post.userId}`);
@@ -21,11 +22,13 @@ const BlogCard = ({ post }: postDetail) => {
         fetchWriter();
     }, [post.userId]);
 
-    const like = async () => {
+    const handleLike = async () => {
         if (!user) {
             navigate('/signin');
         } else {
-            await axios.put(`/users/like/${post._id}`);
+            post.likes.includes(user._id)
+                ? await axios.put(`/users/dislike/${post._id}`)
+                : await axios.put(`/users/like/${post._id}`);
         }
     };
 
@@ -34,7 +37,7 @@ const BlogCard = ({ post }: postDetail) => {
             <div className="flex justify-between">
                 <div className="flex ">
                     <img
-                        src="https://images.unsplash.com/photo-1633382931031-4475750b6837?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cHJlc29ufGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60"
+                        src={writer.img}
                         alt=""
                         className="rounded-full h-14 w-14 object-cover "
                     />
@@ -49,10 +52,14 @@ const BlogCard = ({ post }: postDetail) => {
                 <div>
                     <div
                         className=" flex items-center border border-purple-600 px-2 py-1 rounded-md text-indigo-500 cursor-pointer hover:bg-indigo-500 hover:text-white "
-                        onClick={like}
+                        onClick={handleLike}
                     >
                         <AiFillHeart />
-                        <p className="ml-2 "> {post.likes.length} </p>
+                        {post.likes?.includes(user._id) ? (
+                            <p className="ml-2 "> {post.likes.length}Liked </p>
+                        ) : (
+                            <p className="ml-2 "> {post.likes.length} </p>
+                        )}
                     </div>
                 </div>
             </div>

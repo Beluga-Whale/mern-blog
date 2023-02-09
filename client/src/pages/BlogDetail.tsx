@@ -3,7 +3,9 @@ import { useEffect, useState } from 'react';
 import { AiFillHeart } from 'react-icons/ai';
 import { format } from 'timeago.js';
 import axios from 'axios';
-import { useAppSelector } from '../app/hooks';
+import { useAppSelector, useAppDispatch } from '../app/hooks';
+import { subscription } from '../features/userSlice';
+import { like } from '../features/postSlice';
 
 const BlogDetail = () => {
     const { id } = useParams();
@@ -11,6 +13,7 @@ const BlogDetail = () => {
     const [writer, setWriter] = useState<any>({});
     const { user } = useAppSelector(state => state.users);
 
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -26,11 +29,28 @@ const BlogDetail = () => {
             } catch (err) {}
         };
         fetchData();
-    }, [id]);
+    }, [id, dispatch]);
 
     const handleDelete = async () => {
         await axios.delete(`/posts/${id}`);
         navigate('/');
+    };
+
+    const handleLike = async () => {
+        if (!user) {
+            navigate('/signin');
+        } else {
+            detail.likes.includes(user._id)
+                ? await axios.put(`/users/dislike/${detail._id}`)
+                : await axios.put(`/users/like/${detail._id}`);
+        }
+    };
+
+    const handleFollow = async () => {
+        user.followerUsers.includes(writer._id)
+            ? await axios.put(`/users/unfollow/${writer._id}`)
+            : await axios.put(`/users/follow/${writer._id}`);
+        dispatch(subscription(writer._id));
     };
 
     return (
@@ -41,7 +61,7 @@ const BlogDetail = () => {
                     <div className="flex items-center">
                         <div className="flex items-center">
                             <img
-                                src="https://images.unsplash.com/photo-1633382931031-4475750b6837?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cHJlc29ufGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60"
+                                src={writer.img}
                                 alt=""
                                 className="rounded-full h-9 w-9 object-cover "
                             />
@@ -77,11 +97,22 @@ const BlogDetail = () => {
                             </div>
                         ) : (
                             <div className="flex ml-4 items-center">
-                                <button className="bg-slate-400 px-3 py-1 rounded">
-                                    Follow {writer.name}
+                                <button
+                                    className="bg-slate-400 px-3 py-1 rounded"
+                                    onClick={handleFollow}
+                                >
+                                    {user.followerUsers?.includes(writer._id)
+                                        ? 'Unfollow'
+                                        : `Follow ${writer.name}`}
                                 </button>
-                                <button className="ml-4 flex items-center bg-green-600 px-3 py-1 rounded">
-                                    <AiFillHeart /> <p>Like Article</p>
+                                <button
+                                    className="ml-4 flex items-center bg-green-600 px-3 py-1 rounded"
+                                    onClick={handleLike}
+                                >
+                                    <AiFillHeart className="mr-1" />
+                                    {detail.likes?.includes(user._id)
+                                        ? 'Liked'
+                                        : 'Like Article'}
                                 </button>
                             </div>
                         )}

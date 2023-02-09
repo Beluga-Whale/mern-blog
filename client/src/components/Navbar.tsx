@@ -25,21 +25,28 @@ const Navbar = () => {
 
             {user ? (
                 <ul className="hidden  md:flex">
-                    <li className="px-4  cursor-pointer    hover:scale-105 duration-200 hover:text-indigo-500 hover:font-semibold ">
+                    <li className="px-4 cursor-pointer    hover:scale-105 duration-200 hover:text-indigo-500 hover:font-semibold ">
                         <Link to="/">Home</Link>
                     </li>
-                    <li className="px-4  cursor-pointer    hover:scale-105 duration-200 hover:text-indigo-500 hover:font-semibold ">
+                    <li className="px-4 cursor-pointer    hover:scale-105 duration-200 hover:text-indigo-500 hover:font-semibold ">
                         <Link to="/Editor" className="flex items-center ">
                             <MdOutlineArticle size={20} className="mr-3" />
                             <p>New Article</p>
                         </Link>
                     </li>
-                    <li className="px-4  cursor-pointer    hover:scale-105 duration-200 hover:text-indigo-500 hover:font-semibold ">
-                        {user.name}
+                    <li className="px-4 cursor-pointer    hover:scale-105 duration-200 hover:text-indigo-500 hover:font-semibold ">
+                        <div className="flex items-center ">
+                            <img
+                                className="w-7 h-7 mr-2 object-cover rounded-full"
+                                src={user.img}
+                                alt=""
+                            />
+                            <p>{user.name}</p>
+                        </div>
                     </li>
 
                     <li
-                        className="px-4  cursor-pointer    hover:scale-105 duration-200 hover:text-indigo-500 hover:font-semibold "
+                        className="px-4 cursor-pointer hover:scale-105 duration-200 hover:text-indigo-500 hover:font-semibold "
                         onClick={handleLogout}
                     >
                         Logout
