@@ -1,5 +1,5 @@
 import express from 'express'
-import { addPost, deletePost, getPost, updatePost, addView, random, trend, follow, getByTags, search } from '../controllers/postController.js'
+import { addPost, deletePost, getPost, updatePost, addView, random, trend, follow, getByTags, search, myPost } from '../controllers/postController.js'
 import { verifyToken } from '../verifyToken.js'
 
 const router = express.Router()
@@ -15,6 +15,9 @@ router.delete('/:id', verifyToken, deletePost)
 
 //Get post 
 router.get('/find/:id', getPost)
+
+//Get post by Id user
+router.get("/findmyPost/:id", verifyToken, myPost)
 
 //Put View
 router.put('/view/:id', addView)

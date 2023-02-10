@@ -57,6 +57,15 @@ export const getPost = async (req, res, next) => {
     }
 }
 
+export const myPost = async (req, res, next) => {
+    try {
+        const post = await Post.find({ userId: req.user.id })
+        res.status(200).json(post)
+    } catch (err) {
+        next(err)
+    }
+}
+
 export const addView = async (req, res, next) => {
     try {
         await Post.findByIdAndUpdate(req.body.params, {
