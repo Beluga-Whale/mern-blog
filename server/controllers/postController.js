@@ -2,6 +2,7 @@ import { createError } from "../error.js"
 import User from '../models/userModel.js'
 import Post from "../models/postModel.js"
 
+
 export const addPost = async (req, res, next) => {
     const newPost = new Post({ userId: req.user.id, ...req.body })
     try {

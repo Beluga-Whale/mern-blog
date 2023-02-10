@@ -1,11 +1,13 @@
 import axios from 'axios';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const CreateBlog = () => {
     const [title, setTitle] = useState<string>('');
     const [desc, setDesc] = useState<string>('');
 
-    const handleSubmit = async () => {
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
         await axios.post(`/posts`, {
             title,
             desc,

@@ -29,7 +29,7 @@ const Comments = ({ postId }: PostId) => {
         });
         setComment('');
     };
-    console.log(comment);
+
     return (
         <section>
             {user && (
