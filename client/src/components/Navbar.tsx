@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FaBars, FaTimes } from 'react-icons/fa';
 import { useAppSelector, useAppDispatch } from '../app/hooks';
 import { logout } from '../features/userSlice';
@@ -11,8 +11,11 @@ const Navbar = () => {
     const { user } = useAppSelector(state => state.users);
     const dispatch = useAppDispatch();
 
+    const navigate = useNavigate();
+
     const handleLogout = () => {
         dispatch(logout());
+        navigate('/signin');
     };
 
     return (

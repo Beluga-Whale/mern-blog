@@ -2,7 +2,7 @@ import { AiFillHeart } from 'react-icons/ai';
 import { format } from 'timeago.js';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { useAppSelector, useAppDispatch } from '../app/hooks';
+import { useAppSelector } from '../app/hooks';
 import { useNavigate, Link } from 'react-router-dom';
 
 interface postDetail {
@@ -55,7 +55,9 @@ const BlogCard = ({ post }: postDetail) => {
                         onClick={handleLike}
                     >
                         <AiFillHeart />
-                        {post.likes?.includes(user._id) ? (
+                        {user === null ? (
+                            <p className="ml-2 "> {post.likes.length} </p>
+                        ) : post.likes?.includes(user._id) ? (
                             <p className="ml-2 "> {post.likes.length}Liked </p>
                         ) : (
                             <p className="ml-2 "> {post.likes.length} </p>

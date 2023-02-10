@@ -5,6 +5,7 @@ import { format } from 'timeago.js';
 import axios from 'axios';
 import { useAppSelector, useAppDispatch } from '../app/hooks';
 import { subscription } from '../features/userSlice';
+import Comments from '../components/Comments';
 
 const BlogDetail = () => {
     const { id } = useParams();
@@ -121,6 +122,9 @@ const BlogDetail = () => {
             <div className="w-full max-w-5xl mx-auto px-4 m-5">
                 <p className="mb-5">{detail.desc}</p>
                 <hr />
+            </div>
+            <div className="w-full max-w-3xl mx-auto px-4 m-5">
+                <Comments postId={detail} />
             </div>
         </section>
     );

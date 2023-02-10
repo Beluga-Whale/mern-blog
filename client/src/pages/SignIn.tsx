@@ -11,7 +11,6 @@ const SignIn = () => {
     const dispatch = useAppDispatch();
 
     const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
         dispatch(fetchUserByLogin({ email, password }));
         navigate('/');
     };
