@@ -1,12 +1,17 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
-import { useAppSelector } from '../app/hooks';
+import { useAppSelector, useAppDispatch } from '../app/hooks';
+import { logout } from '../features/userSlice';
+import { useNavigate } from 'react-router-dom';
 
 const Setting = () => {
     const user = useAppSelector(state => state.users.user);
     const [img, setImg] = useState<string>('');
     const [name, setName] = useState<string>('');
     const [email, setEmail] = useState<string>('');
+
+    const dispatch = useAppDispatch();
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchUser = async () => {
@@ -19,12 +24,15 @@ const Setting = () => {
         fetchUser();
     }, [user]);
 
-    const handleUpdate = async () => {
+    const handleUpdate = async (e: React.FormEvent) => {
+        e.preventDefault();
         await axios.put(`/users/${user._id}`, {
             name,
             img,
             email,
         });
+        dispatch(logout());
+        navigate('/signin');
     };
 
     return (
