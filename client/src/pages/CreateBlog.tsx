@@ -12,7 +12,7 @@ const CreateBlog = () => {
             title,
             desc,
         });
-        navigate('/MyArticle');
+        navigate('/ProfileUser');
     };
 
     return (

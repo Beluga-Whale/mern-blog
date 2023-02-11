@@ -7,6 +7,7 @@ import Home from './pages/Home';
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
 import ProfileUser from './pages/ProfileUser';
+import Setting from './pages/Setting';
 
 function App() {
     return (
@@ -20,7 +21,15 @@ function App() {
                 <Route path="/blog/:id" element={<BlogDetail />} />
                 <Route path="/Editor" element={<CreateBlog />} />
                 <Route path="/Editor/:id" element={<EditBlog />} />
-                <Route path="/ProfileUser" element={<ProfileUser />} />
+                <Route
+                    path="/ProfileUser"
+                    element={<ProfileUser type="findmypost" />}
+                />
+                <Route
+                    path="/ProfileUser/favorited"
+                    element={<ProfileUser type="follow" />}
+                />
+                <Route path="/setting" element={<Setting />} />
             </Routes>
         </>
     );
